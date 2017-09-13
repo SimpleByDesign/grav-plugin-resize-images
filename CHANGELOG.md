@@ -1,3 +1,8 @@
+# v0.2.3
+##  13/09/2017
+
+1. [](#new)
+    * Added option to switch filename between original @x and suffixed with -width.
 # v0.2.2
 ##  03/03/2017
 

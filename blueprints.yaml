@@ -1,14 +1,14 @@
 name: Resize Images
-version: 0.2.2
-description: Generate responsive versions of images as they are uploaded
+version: 0.2.3
+description: Generate responsive versions of images as they are uploaded. Original can be located here: https://github.com/fredrikekelund/grav-plugin-resize-images and is available for auto download via the Grav admin package.
 icon: picture-o
 author:
   name: Fredrik Ekelund
   email: fredrik@fredrik.computer
-homepage: https://github.com/fredrikekelund/grav-plugin-resize-images
+homepage: https://github.com/SimpleByDesign/grav-plugin-resize-images
 keywords: images, responsive, srcset
-bugs: https://github.com/fredrikekelund/grav-plugin-resize-images/issues
-docs: https://github.com/fredrikekelund/grav-plugin-resize-images/blob/develop/README.md
+bugs: https://github.com/SimpleByDesign/grav-plugin-resize-images/issues
+docs: https://github.com/SimpleByDesign/grav-plugin-resize-images/blob/develop/README.md
 license: MIT
 
 form:
@@ -22,6 +22,16 @@ form:
       options:
         1: Enabled
         0: Disabled
+      validate:
+        type: bool
+    nameoffile:
+      type: toggle
+      label: Responsive filename
+      highlight: 1
+      default: 1
+      options:
+        1: "Use @x"
+        0: "Use Width"
       validate:
         type: bool
     adapter:

@@ -136,10 +136,15 @@ class ResizeImagesPlugin extends Plugin
                 }
 
                 $count++;
-                $dest_path = "{$info['dirname']}/{$info['filename']}@{$count}x.{$info['extension']}";
                 $width = $size['width'];
                 $quality = $size['quality'];
                 $height = ($width / $medium->width) * $medium->height;
+
+                if( $this->config->get('plugins.resize-images.nameoffile') )
+                  $dest_path = "{$info['dirname']}/{$info['filename']}@{$count}x.{$info['extension']}";
+                else
+                  $dest_path = "{$info['dirname']}/{$info['filename']}-{$width}.{$info['extension']}";
+
 
                 $this->resizeImage($source_path, $dest_path, $width, $height, $quality, $medium->width, $medium->height);
             }
@@ -152,10 +157,16 @@ class ResizeImagesPlugin extends Plugin
                 if ($remove_original) {
                     unlink($source_path);
                 } else {
+                  if( $this->config->get('plugins.resize-images.nameoffile') )
                     rename($source_path, "{$info['dirname']}/{$info['filename']}@{$original_index}x.{$info['extension']}");
+                  else
+                    rename($source_path, "{$info['dirname']}/{$info['filename']}-{$width}.{$info['extension']}");
                 }
+                if( $this->config->get('plugins.resize-images.nameoffile') )
+                  rename("{$info['dirname']}/{$info['filename']}@1x.{$info['extension']}", $source_path);
+                else
+                  rename("{$info['dirname']}/{$info['filename']}-{$width}.{$info['extension']}", $source_path);
 
-                rename("{$info['dirname']}/{$info['filename']}@1x.{$info['extension']}", $source_path);
             }
 
             $message = "Resized $filename $count times";
