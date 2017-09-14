@@ -1,8 +1,8 @@
 # [Grav](http://getgrav.org) Resize Images Plugin
 
-**This plugin is still young! If you encounter any issues, please don't hesitate
-to [report
-them](https://github.com/fredrikekelund/grav-plugin-resize-images/issues).**
+**Original plugin is located [here](https://github.com/fredrikekelund/grav-plugin-resize-images/issues).**
+
+## Original Description
 
 > Resize images at upload time in the Grav admin
 
@@ -22,6 +22,8 @@ method that can be used to generate image alternatives in theme templates.
 
 Images that already have responsive alternatives won't be resized.
 
+----------------------------------------
+
 ## Configuration
 
 You can customize the set of widths that your images will be resized to. By
@@ -36,14 +38,16 @@ be good!
 This plugin won't convert PNG's to JPEG's, so the quality number only applies to
 JPEG images.
 
-## Installation
+## Installation of original plugin
 
 Download the [ZIP
 archive](https://github.com/fredrikekelund/grav-plugin-resize-images/archive/master.zip)
 from GitHub and extract it to the `user/plugins` directory in your Grav
 installation.
 
-## CLI
+## Installation of this version
 
-I'm aiming to add support for CLI commands to this plugin as well, to make it
-easy to generate responsive image alternatives for already uploaded images.
+Download the [ZIP
+archive](https://github.com/SimpleByDesign/grav-plugin-resize-images/archive/master.zip)
+from GitHub and extract it to the `user/plugins` directory in your Grav
+installation.

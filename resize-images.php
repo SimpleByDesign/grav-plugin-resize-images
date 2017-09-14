@@ -113,7 +113,6 @@ class ResizeImagesPlugin extends Plugin
 
         $this->sizes = (array) $this->config->get('plugins.resize-images.sizes');
         $this->adapter = $this->config->get('plugins.resize-images.adapter', 'imagick');
-
         foreach ($page->media()->images() as $filename => $medium) {
             $srcset = $medium->srcset(false);
 
@@ -129,24 +128,35 @@ class ResizeImagesPlugin extends Plugin
             $source_path = "$page_path/$filename";
             $info = pathinfo($source_path);
             $count = 0;
-
+            $message = "";
+            $createFile = true;
             foreach ($this->sizes as $i => $size) {
-                if ($size['width'] >= $medium->width) {
-                    continue;
-                }
+              $pos = strpos( trim( $filename ), trim($size['width']) );
+              if( $pos !== false ){
+                // echo "Size exists: " . $filename . " " . $size['width'] . "<br/>";
+                $createFile = false;
+                // $this->grav['admin']->setMessage($filename . " " . $size['width'] . " Already Exists", 'info');
+              }
+            }
+            if( $createFile ){
+              foreach ($this->sizes as $i => $size) {
+                  if ($size['width'] >= $medium->width) {
+                      continue;
+                  }
 
-                $count++;
-                $width = $size['width'];
-                $quality = $size['quality'];
-                $height = ($width / $medium->width) * $medium->height;
+                  $count++;
+                  $width = $size['width'];
+                  $quality = $size['quality'];
+                  $height = ($width / $medium->width) * $medium->height;
 
-                if( $this->config->get('plugins.resize-images.nameoffile') )
-                  $dest_path = "{$info['dirname']}/{$info['filename']}@{$count}x.{$info['extension']}";
-                else
-                  $dest_path = "{$info['dirname']}/{$info['filename']}-{$width}.{$info['extension']}";
+                  if( $this->config->get('plugins.resize-images.nameoffile') ){
+                    $dest_path = "{$info['dirname']}/{$info['filename']}@{$count}x.{$info['extension']}";
+                  }else{
+                    $dest_path = "{$info['dirname']}/{$info['filename']}-{$width}.{$info['extension']}";
+                  }
 
-
-                $this->resizeImage($source_path, $dest_path, $width, $height, $quality, $medium->width, $medium->height);
+                  $this->resizeImage($source_path, $dest_path, $width, $height, $quality, $medium->width, $medium->height);
+              }
             }
 
             $remove_original = $this->config->get('plugins.resize-images.remove_original');
@@ -168,14 +178,14 @@ class ResizeImagesPlugin extends Plugin
                   rename("{$info['dirname']}/{$info['filename']}-{$width}.{$info['extension']}", $source_path);
 
             }
-
-            $message = "Resized $filename $count times";
+            if( $createFile )
+              $message = "Resized $filename $count times";
 
             if ($remove_original) {
                 $message .= ' (and removed the original image)';
             }
-
-            $this->grav['admin']->setMessage($message, 'info');
+            if( strlen( trim( $message ) ) >= 1 )
+              $this->grav['admin']->setMessage($message, 'info');
         }
     }
 }
