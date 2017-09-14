@@ -2,6 +2,10 @@
 
 **Original plugin is located [here](https://github.com/fredrikekelund/grav-plugin-resize-images/issues).**
 
+## This Version
+
+This version of the plugin allows you to select the standard resize naming structure or one that adds the width to the new resized image. This allows the images to work in the Responsive images plugin located here: [](https://github.com/OliverO2/grav-plugin-responsive-images)
+
 ## Original Description
 
 > Resize images at upload time in the Grav admin
